@@ -17,8 +17,8 @@ FirebaseAuth auth;
 FirebaseConfig config;
 
 // Ultrasonic Sensor Pins
-#define TRIG_PIN D1  
-#define ECHO_PIN D2 
+#define TRIG_PIN D5  
+#define ECHO_PIN D6 
 
 // NFC Module Pins
 #define SS_PIN D3  // GPIO4 (SDA/SS)
