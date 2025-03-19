@@ -27,8 +27,8 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 
 
 // Manually defined GPS coordinates
-const float lat = 6.9271;  // Example latitude
-const float lng = 79.8612; // Example longitude
+const float lat = 6.9244;  // Example latitude
+const float lng = 79.8705; // Example longitude
 
 void setup() {
   Serial.begin(115200);
