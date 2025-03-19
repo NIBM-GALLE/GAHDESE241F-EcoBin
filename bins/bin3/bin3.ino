@@ -4,8 +4,8 @@
 #include <MFRC522.h>
 
 // WiFi Credentials
-#define WIFI_SSID "Realme 7"
-#define WIFI_PASSWORD "123456789"
+#define WIFI_SSID "Dialog 4G 442"
+#define WIFI_PASSWORD "83350cdD"
 
 // Firebase Credentials
 #define FIREBASE_HOST "https://smart-waste-management-3041a-default-rtdb.asia-southeast1.firebasedatabase.app/"
@@ -17,8 +17,8 @@ FirebaseAuth auth;
 FirebaseConfig config;
 
 // Ultrasonic Sensor Pins
-#define TRIG_PIN D1  
-#define ECHO_PIN D2 
+#define TRIG_PIN D5  
+#define ECHO_PIN D6 
 
 // NFC Module Pins
 #define SS_PIN D3  // GPIO4 (SDA/SS)
@@ -77,10 +77,10 @@ void loop() {
   }
 
   // Send Data to Firebase
-  Firebase.setFloat(firebaseData, "/wasteBins/bin1/wasteLevel", wasteLevel);
-  Firebase.setFloat(firebaseData, "/wasteBins/bin1/lat", lat);
-  Firebase.setFloat(firebaseData, "/wasteBins/bin1/lng", lng);
-  Firebase.setString(firebaseData, "/wasteBins/bin1/nfcAccess", cardUID);
+  Firebase.setFloat(firebaseData, "/wasteBins/bin3/wasteLevel", wasteLevel);
+  Firebase.setFloat(firebaseData, "/wasteBins/bin3/lat", lat);
+  Firebase.setFloat(firebaseData, "/wasteBins/bin3/lng", lng);
+  Firebase.setString(firebaseData, "/wasteBins/bin3/nfcAccess", cardUID);
 
   Serial.println("Data Sent to Firebase!");
   delay(5000); // Send data every 5 seconds
