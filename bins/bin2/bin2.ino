@@ -4,8 +4,8 @@
 #include <MFRC522.h>
 
 // WiFi Credentials
-#define WIFI_SSID "Realme 7"
-#define WIFI_PASSWORD "123456789"
+#define WIFI_SSID "Dialog 4G 442"
+#define WIFI_PASSWORD "83350cdD"
 
 // Firebase Credentials
 #define FIREBASE_HOST "https://smart-waste-management-3041a-default-rtdb.asia-southeast1.firebasedatabase.app/"
@@ -77,10 +77,10 @@ void loop() {
   }
 
   // Send Data to Firebase
-  Firebase.setFloat(firebaseData, "/wasteBins/bin1/wasteLevel", wasteLevel);
-  Firebase.setFloat(firebaseData, "/wasteBins/bin1/lat", lat);
-  Firebase.setFloat(firebaseData, "/wasteBins/bin1/lng", lng);
-  Firebase.setString(firebaseData, "/wasteBins/bin1/nfcAccess", cardUID);
+  Firebase.setFloat(firebaseData, "/wasteBins/bin2/wasteLevel", wasteLevel);
+  Firebase.setFloat(firebaseData, "/wasteBins/bin2/lat", lat);
+  Firebase.setFloat(firebaseData, "/wasteBins/bin2/lng", lng);
+  Firebase.setString(firebaseData, "/wasteBins/bin2/nfcAccess", cardUID);
 
   Serial.println("Data Sent to Firebase!");
   delay(5000); // Send data every 5 seconds
