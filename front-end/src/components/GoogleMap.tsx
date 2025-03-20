@@ -5,12 +5,12 @@ import { fetchBinsData } from "../firebase/db";
 
 const containerStyle = {
   width: "100%",
-  height: "400px",
+  height: "300px",
 };
 
 const center = {
-  lat: 6.9271, // Default latitude (Colombo)
-  lng: 79.8612, // Default longitude (Colombo)
+  lat: 6.9271, // Default location (Colombo)
+  lng: 79.8612,
 };
 
 const GoogleMapComponent = () => {
@@ -27,11 +27,11 @@ const GoogleMapComponent = () => {
   if (!isLoaded) return <p>Loading Map...</p>;
 
   return (
-    <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={12}>
+    <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={13}>
       {bins &&
-        Object.values(bins).map((bin: any, index) => (
+        Object.entries(bins).map(([key, bin]: any) => (
           <Marker
-            key={index}
+            key={key}
             position={{ lat: bin.lat, lng: bin.lng }}
             label={bin.status === "Full" ? "🔴" : "🟢"}
           />

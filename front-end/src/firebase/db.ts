@@ -1,12 +1,15 @@
 import { getDatabase, ref, onValue } from "firebase/database";
-import { app } from "./firebaseConfig"; // Ensure Firebase is initialized
+import { app } from "./firebaseConfig"; // Firebase initialization
 
-const db = getDatabase(app);
-
-export const fetchBinsData = (callback: (data: any) => void) => {
+export const fetchBinsData = (setBins: (data: any) => void) => {
+  const db = getDatabase(app);
   const binsRef = ref(db, "wasteBins");
+
   onValue(binsRef, (snapshot) => {
-    const data = snapshot.val();
-    callback(data);
+    if (snapshot.exists()) {
+      setBins(snapshot.val());
+    } else {
+      setBins(null);
+    }
   });
 };
