@@ -4,8 +4,8 @@
 #include <MFRC522.h>
 
 // WiFi Credentials
-#define WIFI_SSID "Dialog 4G 442"
-#define WIFI_PASSWORD "83350cdD"
+#define WIFI_SSID "Dailog 4G"
+#define WIFI_PASSWORD "123456789"
 
 // Firebase Credentials
 #define FIREBASE_HOST "https://smart-waste-management-3041a-default-rtdb.asia-southeast1.firebasedatabase.app/"
@@ -25,10 +25,11 @@ FirebaseConfig config;
 #define RST_PIN D4 // GPIO5 (Reset)
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
-
 // Manually defined GPS coordinates
-const float lat = 6.9271;  // Example latitude
-const float lng = 79.8612; // Example longitude
+const float lat = 6.9244;  // Example latitude
+const float lng = 79.8705; // Example longitude
+const String binID = "bin4";
+const String location = "Colombo Fourth Street";
 
 void setup() {
   Serial.begin(115200);
@@ -65,6 +66,16 @@ void loop() {
   digitalWrite(TRIG_PIN, LOW);
   long duration = pulseIn(ECHO_PIN, HIGH);
   float wasteLevel = duration * 0.034 / 2;  
+  
+  // Determine status based on waste level
+  String status = "Empty";
+  if (wasteLevel > 75) {
+    status = "Full";
+  } else if (wasteLevel > 40) {
+    status = "Half";
+  } else {
+    status = "Low";
+  }
 
   // Read NFC Card UID
   String cardUID = "No Card";
@@ -77,10 +88,14 @@ void loop() {
   }
 
   // Send Data to Firebase
-  Firebase.setFloat(firebaseData, "/wasteBins/bin4/wasteLevel", wasteLevel);
-  Firebase.setFloat(firebaseData, "/wasteBins/bin4/lat", lat);
-  Firebase.setFloat(firebaseData, "/wasteBins/bin4/lng", lng);
-  Firebase.setString(firebaseData, "/wasteBins/bin4/nfcAccess", cardUID);
+  String path = "/wasteBins/" + binID;
+  Firebase.setString(firebaseData, path + "/id", binID);
+  Firebase.setString(firebaseData, path + "/location", location);
+  Firebase.setFloat(firebaseData, path + "/lat", lat);
+  Firebase.setFloat(firebaseData, path + "/lng", lng);
+  Firebase.setFloat(firebaseData, path + "/wasteLevel", wasteLevel);
+  Firebase.setString(firebaseData, path + "/status", status);
+  Firebase.setString(firebaseData, path + "/nfcAccess", cardUID);
 
   Serial.println("Data Sent to Firebase!");
   delay(5000); // Send data every 5 seconds
