@@ -2,10 +2,21 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, User, Trash, Settings } from "lucide-react"; // Icons
+import { Home, User, Trash, Settings, Users } from "lucide-react";
+import { useEffect, useState } from "react";
+import { getCurrentUser } from "@/firebase/db";
 
 const Sidebar = () => {
   const pathname = usePathname() || "";
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      const user = await getCurrentUser();
+      if (user) setUserRole(user.role);
+    };
+    fetchUserRole();
+  }, []);
 
   const navItems = [
     { href: "/dashboard", label: "Dashboard", icon: <Home size={20} /> },
@@ -13,6 +24,10 @@ const Sidebar = () => {
     { href: "/dashboard/bins", label: "Bins", icon: <Trash size={20} /> },
     { href: "/dashboard/settings", label: "Settings", icon: <Settings size={20} /> },
   ];
+
+  if (userRole === "admin") {
+    navItems.push({ href: "/dashboard/users", label: "Manage Users", icon: <Users size={20} /> });
+  }
 
   return (
     <aside className="bg-gray-900 text-white w-64 h-screen p-6 fixed top-0 left-0">
