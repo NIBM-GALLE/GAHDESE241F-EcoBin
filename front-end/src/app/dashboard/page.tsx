@@ -18,7 +18,8 @@ const UserDashboard = () => {
 
   if (!bins) return <p className="text-center mt-10">Loading bins data...</p>;
 
-  const binLevels = Object.values(bins).map((bin: any) => bin.level);
+  // Convert wasteLevel from decimal to percentage
+  const binLevels = Object.values(bins).map((bin: any) => bin.wasteLevel * 100);
   const binLocations = Object.values(bins).map((bin: any) => bin.location);
   const fullBins = binLevels.filter((level) => level >= 75).length;
 
@@ -49,7 +50,6 @@ const UserDashboard = () => {
            <h2 className="text-xl font-bold mb-4">Bin Locations</h2>
             <GoogleMapComponent />
         </div>
-
 
         {/* 📌 Charts */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
