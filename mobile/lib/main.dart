@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
-import 'getstarted.dart'; // Import the Get Started page
+import 'dashboarduser.dart';
 // Import the user type selection page
 
 void main() {
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: const GetStartedPage(), // Open Get Started Page first
+      home: const EcoBinDashboard(), // Open Get Started Page first
       builder: DevicePreview.appBuilder,
       locale: DevicePreview.locale(context),
     );

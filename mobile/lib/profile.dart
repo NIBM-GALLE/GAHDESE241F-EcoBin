@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const WasteManagementApp(children: [],));
+  runApp(const ProfileOfUser(children: []));
 }
 
-class WasteManagementApp extends StatelessWidget {
-  const WasteManagementApp({Key? key, required List<Text> children}) : super(key: key);
+class ProfileOfUser extends StatelessWidget {
+  const ProfileOfUser({Key? key, required List<Text> children})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -64,18 +65,45 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   // Bin types
   final List<Map<String, dynamic>> binTypes = [
-    {'name': 'General Waste', 'icon': Icons.delete, 'color': const Color.fromARGB(255, 23, 23, 23), 'selected': true},
-    {'name': 'Recyclables', 'icon': Icons.recycling, 'color': Colors.blue, 'selected': true},
-    {'name': 'Organic Waste', 'icon': Icons.eco, 'color': Colors.green, 'selected': false},
-    {'name': 'Glass', 'icon': Icons.liquor, 'color': Colors.amber, 'selected': false},
-    {'name': 'Hazardous', 'icon': Icons.warning, 'color': Colors.red, 'selected': false},
+    {
+      'name': 'General Waste',
+      'icon': Icons.delete,
+      'color': const Color.fromARGB(255, 23, 23, 23),
+      'selected': true,
+    },
+    {
+      'name': 'Recyclables',
+      'icon': Icons.recycling,
+      'color': Colors.blue,
+      'selected': true,
+    },
+    {
+      'name': 'Organic Waste',
+      'icon': Icons.eco,
+      'color': Colors.green,
+      'selected': false,
+    },
+    {
+      'name': 'Glass',
+      'icon': Icons.liquor,
+      'color': Colors.amber,
+      'selected': false,
+    },
+    {
+      'name': 'Hazardous',
+      'icon': Icons.warning,
+      'color': Colors.red,
+      'selected': false,
+    },
   ];
 
   // Form controllers
   final _formKey = GlobalKey<FormState>();
   final _firstNameController = TextEditingController(text: 'John');
   final _lastNameController = TextEditingController(text: 'Smith');
-  final _emailController = TextEditingController(text: 'john.smith@example.com');
+  final _emailController = TextEditingController(
+    text: 'john.smith@example.com',
+  );
   bool _isEditing = false;
   String _profileImagePath = '';
 
@@ -122,20 +150,14 @@ class _ProfilePageState extends State<ProfilePage> {
         elevation: 0,
         actions: [
           if (!_isEditing)
-            IconButton(
-              icon: const Icon(Icons.edit),
-              onPressed: _toggleEditMode,
-            )
+            IconButton(icon: const Icon(Icons.edit), onPressed: _toggleEditMode)
           else
             IconButton(
               icon: const Icon(Icons.close),
               onPressed: _toggleEditMode,
             ),
           if (_isEditing)
-            IconButton(
-              icon: const Icon(Icons.check),
-              onPressed: _saveProfile,
-            ),
+            IconButton(icon: const Icon(Icons.check), onPressed: _saveProfile),
         ],
       ),
       body: SingleChildScrollView(
@@ -152,12 +174,18 @@ class _ProfilePageState extends State<ProfilePage> {
                     CircleAvatar(
                       radius: 60,
                       backgroundColor: Colors.grey[200],
-                      backgroundImage: _profileImagePath.isNotEmpty
-                          ? AssetImage(_profileImagePath) as ImageProvider
-                          : null,
-                      child: _profileImagePath.isEmpty
-                          ? const Icon(Icons.person, size: 80, color: Colors.grey)
-                          : null,
+                      backgroundImage:
+                          _profileImagePath.isNotEmpty
+                              ? AssetImage(_profileImagePath) as ImageProvider
+                              : null,
+                      child:
+                          _profileImagePath.isEmpty
+                              ? const Icon(
+                                Icons.person,
+                                size: 80,
+                                color: Colors.grey,
+                              )
+                              : null,
                     ),
                     if (_isEditing)
                       Positioned(
@@ -167,7 +195,11 @@ class _ProfilePageState extends State<ProfilePage> {
                           backgroundColor: Theme.of(context).primaryColor,
                           radius: 20,
                           child: IconButton(
-                            icon: const Icon(Icons.camera_alt, color: Colors.white, size: 20),
+                            icon: const Icon(
+                              Icons.camera_alt,
+                              color: Colors.white,
+                              size: 20,
+                            ),
                             onPressed: () {
                               // Implement image selection
                             },
@@ -177,9 +209,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
               ),
-              
+
               const SizedBox(height: 30),
-              
+
               // Personal Information Section
               Text(
                 'Personal Information',
@@ -190,7 +222,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               const SizedBox(height: 16),
-              
+
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -219,26 +251,26 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(height: 8),
                     _isEditing
                         ? TextFormField(
-                            controller: _firstNameController,
-                            decoration: const InputDecoration(
-                              hintText: 'Enter your first name',
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your first name';
-                              }
-                              return null;
-                            },
-                          )
-                        : Text(
-                            _firstNameController.text,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
+                          controller: _firstNameController,
+                          decoration: const InputDecoration(
+                            hintText: 'Enter your first name',
                           ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your first name';
+                            }
+                            return null;
+                          },
+                        )
+                        : Text(
+                          _firstNameController.text,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                     const SizedBox(height: 16),
-                    
+
                     // Last Name
                     Text(
                       'Last Name',
@@ -251,26 +283,26 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(height: 8),
                     _isEditing
                         ? TextFormField(
-                            controller: _lastNameController,
-                            decoration: const InputDecoration(
-                              hintText: 'Enter your last name',
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your last name';
-                              }
-                              return null;
-                            },
-                          )
-                        : Text(
-                            _lastNameController.text,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
+                          controller: _lastNameController,
+                          decoration: const InputDecoration(
+                            hintText: 'Enter your last name',
                           ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your last name';
+                            }
+                            return null;
+                          },
+                        )
+                        : Text(
+                          _lastNameController.text,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                     const SizedBox(height: 16),
-                    
+
                     // Email
                     Text(
                       'Email Address',
@@ -283,34 +315,34 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(height: 8),
                     _isEditing
                         ? TextFormField(
-                            controller: _emailController,
-                            decoration: const InputDecoration(
-                              hintText: 'Enter your email address',
-                            ),
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your email';
-                              }
-                              if (!value.contains('@')) {
-                                return 'Please enter a valid email';
-                              }
-                              return null;
-                            },
-                          )
-                        : Text(
-                            _emailController.text,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
+                          controller: _emailController,
+                          decoration: const InputDecoration(
+                            hintText: 'Enter your email address',
                           ),
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your email';
+                            }
+                            if (!value.contains('@')) {
+                              return 'Please enter a valid email';
+                            }
+                            return null;
+                          },
+                        )
+                        : Text(
+                          _emailController.text,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                   ],
                 ),
               ),
-              
+
               const SizedBox(height: 30),
-              
+
               // Bin Selection Section
               Text(
                 'Requested Bins',
@@ -321,7 +353,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               const SizedBox(height: 16),
-              
+
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -342,38 +374,43 @@ class _ProfilePageState extends State<ProfilePage> {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 12.0),
                       child: InkWell(
-                        onTap: _isEditing ? () => _updateBinSelection(index) : null,
+                        onTap:
+                            _isEditing
+                                ? () => _updateBinSelection(index)
+                                : null,
                         borderRadius: BorderRadius.circular(8),
                         child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 16,
+                          ),
                           decoration: BoxDecoration(
-                            color: bin['selected']
-                                ? bin['color'].withOpacity(0.1)
-                                : Colors.grey[100],
+                            color:
+                                bin['selected']
+                                    ? bin['color'].withOpacity(0.1)
+                                    : Colors.grey[100],
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
-                              color: bin['selected']
-                                  ? bin['color']
-                                  : Colors.grey[300]!,
+                              color:
+                                  bin['selected']
+                                      ? bin['color']
+                                      : Colors.grey[300]!,
                               width: 1,
                             ),
                           ),
                           child: Row(
                             children: [
-                              Icon(
-                                bin['icon'],
-                                color: bin['color'],
-                                size: 24,
-                              ),
+                              Icon(bin['icon'], color: bin['color'], size: 24),
                               const SizedBox(width: 16),
                               Text(
                                 bin['name'],
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
-                                  color: bin['selected']
-                                      ? bin['color']
-                                      : Colors.grey[700],
+                                  color:
+                                      bin['selected']
+                                          ? bin['color']
+                                          : Colors.grey[700],
                                 ),
                               ),
                               const Spacer(),
@@ -386,10 +423,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   activeColor: bin['color'],
                                 )
                               else if (bin['selected'])
-                                Icon(
-                                  Icons.check_circle,
-                                  color: bin['color'],
-                                ),
+                                Icon(Icons.check_circle, color: bin['color']),
                             ],
                           ),
                         ),
@@ -398,9 +432,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   }),
                 ),
               ),
-              
+
               const SizedBox(height: 30),
-              
+
               if (_isEditing)
                 Center(
                   child: ElevatedButton(
