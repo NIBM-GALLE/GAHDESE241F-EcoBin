@@ -26,8 +26,8 @@ FirebaseConfig config;
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
 // Manually defined GPS coordinates
-const float lat = 6.9340;  // Example latitude
-const float lng = 79.8532; // Example longitude
+const float lat = 6.036970;  // Example latitude
+const float lng = 80.224024; // Example longitude
 const String binID = "bin2";
 const String location = "Colombo Second Street";
 
