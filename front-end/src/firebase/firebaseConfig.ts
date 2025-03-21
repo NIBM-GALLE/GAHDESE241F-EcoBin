@@ -4,7 +4,7 @@ import { getFirestore } from "firebase/firestore";
 
 // Your Firebase config
 const firebaseConfig = {
-  apiKey: "AIzaSyBVRhl5af7yx04_MtYuN5ejYgSjbLwDdVU",
+  apiKey: "secrets.FREBASE",
   authDomain: "smart-waste-management-3041a.firebaseapp.com",
   databaseURL: "https://smart-waste-management-3041a-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "smart-waste-management-3041a",
