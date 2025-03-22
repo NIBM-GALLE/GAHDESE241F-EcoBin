@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 class PaymentPage extends StatefulWidget {
   final Set<String> selectedBinTypes;
-  
+
   // Add constructor to receive selected bins
-  const PaymentPage({Key? key, required this.selectedBinTypes}) : super(key: key);
+  const PaymentPage({Key? key, required this.selectedBinTypes})
+    : super(key: key);
 
   @override
   _PaymentPageState createState() => _PaymentPageState();
@@ -13,10 +14,10 @@ class PaymentPage extends StatefulWidget {
 class _PaymentPageState extends State<PaymentPage> {
   // Payment method
   String _paymentMethod = 'Credit Card';
-  
+
   // Success dialog visibility
   bool _showSuccessDialog = false;
-  
+
   // Bin types with prices and descriptions
   final List<Map<String, dynamic>> _binTypes = [
     {
@@ -54,10 +55,7 @@ class _PaymentPageState extends State<PaymentPage> {
   ];
 
   // Payment methods
-  final List<String> _paymentMethods = [
-    'Credit Card',
-    'Cash',
-  ];
+  final List<String> _paymentMethods = ['Credit Card', 'Cash'];
 
   // Calculate total based on selections
   double calculateTotal() {
@@ -77,7 +75,7 @@ class _PaymentPageState extends State<PaymentPage> {
     setState(() {
       _showSuccessDialog = true;
     });
-    
+
     // Auto-close after 3 seconds and navigate back
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pop();
@@ -112,25 +110,6 @@ class _PaymentPageState extends State<PaymentPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Header
-                Container(
-                  width: double.infinity,
-                  color: Colors.green.shade600,
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    bottom: 20,
-                  ),
-                  child: const Text(
-                    'Complete Payment',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-                
                 // Payment details section
                 Padding(
                   padding: const EdgeInsets.all(20),
@@ -147,71 +126,78 @@ class _PaymentPageState extends State<PaymentPage> {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      
+
                       // Payment Method Toggle
                       Row(
-                        children: _paymentMethods.map((method) {
-                          bool isSelected = _paymentMethod == method;
-                          return Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _paymentMethod = method;
-                                });
-                              },
-                              child: Container(
-                                margin: EdgeInsets.only(
-                                  right: method == 'Credit Card' ? 10 : 0,
-                                  left: method == 'Cash' ? 10 : 0,
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 12,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: isSelected
-                                      ? Colors.green.shade50
-                                      : Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: isSelected
-                                        ? Colors.green.shade600
-                                        : Colors.grey.shade300,
-                                    width: isSelected ? 2 : 1,
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      method == 'Credit Card'
-                                          ? Icons.credit_card
-                                          : Icons.money,
-                                      color: isSelected
-                                          ? Colors.green.shade600
-                                          : Colors.grey.shade700,
+                        children:
+                            _paymentMethods.map((method) {
+                              bool isSelected = _paymentMethod == method;
+                              return Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _paymentMethod = method;
+                                    });
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                      right: method == 'Credit Card' ? 10 : 0,
+                                      left: method == 'Cash' ? 10 : 0,
                                     ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      method,
-                                      style: TextStyle(
-                                        fontWeight: isSelected
-                                            ? FontWeight.bold
-                                            : FontWeight.normal,
-                                        color: isSelected
-                                            ? Colors.green.shade700
-                                            : Colors.black87,
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 12,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color:
+                                          isSelected
+                                              ? Colors.green.shade50
+                                              : Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color:
+                                            isSelected
+                                                ? Colors.green.shade600
+                                                : Colors.grey.shade300,
+                                        width: isSelected ? 2 : 1,
                                       ),
                                     ),
-                                  ],
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          method == 'Credit Card'
+                                              ? Icons.credit_card
+                                              : Icons.money,
+                                          color:
+                                              isSelected
+                                                  ? Colors.green.shade600
+                                                  : Colors.grey.shade700,
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          method,
+                                          style: TextStyle(
+                                            fontWeight:
+                                                isSelected
+                                                    ? FontWeight.bold
+                                                    : FontWeight.normal,
+                                            color:
+                                                isSelected
+                                                    ? Colors.green.shade700
+                                                    : Colors.black87,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          );
-                        }).toList(),
+                              );
+                            }).toList(),
                       ),
-                      
+
                       const SizedBox(height: 30),
-                      
+
                       // Payment Details Form - Only show for Credit Card
                       if (!isCashPayment) ...[
                         const Text(
@@ -223,7 +209,7 @@ class _PaymentPageState extends State<PaymentPage> {
                           ),
                         ),
                         const SizedBox(height: 15),
-                        
+
                         // Card Details
                         Container(
                           decoration: BoxDecoration(
@@ -249,7 +235,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                 keyboardType: TextInputType.number,
                               ),
                               const SizedBox(height: 15),
-                              
+
                               // Row for expiry and CVV
                               Row(
                                 children: [
@@ -260,30 +246,36 @@ class _PaymentPageState extends State<PaymentPage> {
                                         labelText: 'Expiry Date',
                                         hintText: 'MM/YY',
                                         border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
                                         ),
-                                        contentPadding: const EdgeInsets.symmetric(
-                                          horizontal: 15,
-                                          vertical: 15,
-                                        ),
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                              horizontal: 15,
+                                              vertical: 15,
+                                            ),
                                       ),
                                       keyboardType: TextInputType.datetime,
                                     ),
                                   ),
                                   const SizedBox(width: 15),
-                                  
+
                                   // CVV
                                   Expanded(
                                     child: TextField(
                                       decoration: InputDecoration(
                                         labelText: 'CVV',
                                         border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
                                         ),
-                                        contentPadding: const EdgeInsets.symmetric(
-                                          horizontal: 15,
-                                          vertical: 15,
-                                        ),
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                              horizontal: 15,
+                                              vertical: 15,
+                                            ),
                                       ),
                                       keyboardType: TextInputType.number,
                                       obscureText: true,
@@ -292,7 +284,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                 ],
                               ),
                               const SizedBox(height: 15),
-                              
+
                               // Name on Card
                               TextField(
                                 decoration: InputDecoration(
@@ -329,16 +321,18 @@ class _PaymentPageState extends State<PaymentPage> {
                               Expanded(
                                 child: Text(
                                   'You will need to pay when the bins are delivered to your location',
-                                  style: TextStyle(color: Colors.green.shade800),
+                                  style: TextStyle(
+                                    color: Colors.green.shade800,
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
                       ],
-                      
+
                       const SizedBox(height: 30),
-                      
+
                       // Order Summary
                       Container(
                         width: double.infinity,
@@ -360,7 +354,7 @@ class _PaymentPageState extends State<PaymentPage> {
                               ),
                             ),
                             const SizedBox(height: 15),
-                            
+
                             // Selected Bins
                             if (widget.selectedBinTypes.isEmpty) ...[
                               const Center(
@@ -378,7 +372,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                 style: TextStyle(fontWeight: FontWeight.w500),
                               ),
                               const SizedBox(height: 8),
-                              
+
                               // List of selected bins
                               ...widget.selectedBinTypes.map((binId) {
                                 final bin = _binTypes.firstWhere(
@@ -387,7 +381,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                 return Padding(
                                   padding: const EdgeInsets.only(bottom: 8),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         '• ${bin['name']}',
@@ -402,11 +397,11 @@ class _PaymentPageState extends State<PaymentPage> {
                                 );
                               }).toList(),
                             ],
-                            
+
                             const SizedBox(height: 8),
                             const Divider(),
                             const SizedBox(height: 8),
-                            
+
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -430,17 +425,18 @@ class _PaymentPageState extends State<PaymentPage> {
                           ],
                         ),
                       ),
-                      
+
                       const SizedBox(height: 30),
-                      
+
                       // Payment Button
                       SizedBox(
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: widget.selectedBinTypes.isEmpty
-                              ? null
-                              : _showSuccessMessage,
+                          onPressed:
+                              widget.selectedBinTypes.isEmpty
+                                  ? null
+                                  : _showSuccessMessage,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.green.shade600,
                             foregroundColor: Colors.white,
@@ -465,7 +461,7 @@ class _PaymentPageState extends State<PaymentPage> {
             ),
           ),
         ),
-        
+
         // Success Dialog
         if (_showSuccessDialog)
           Container(
@@ -495,7 +491,9 @@ class _PaymentPageState extends State<PaymentPage> {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      isCashPayment ? 'Order Confirmed!' : 'Payment Successful!',
+                      isCashPayment
+                          ? 'Order Confirmed!'
+                          : 'Payment Successful!',
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -512,7 +510,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     ),
                     const SizedBox(height: 15),
                     Text(
-                      isCashPayment 
+                      isCashPayment
                           ? 'Please prepare \$${total.toStringAsFixed(2)} for when your bins are delivered.'
                           : 'Your order has been processed and your bins will be delivered soon.',
                       textAlign: TextAlign.center,
