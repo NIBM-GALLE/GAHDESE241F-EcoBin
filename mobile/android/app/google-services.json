@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "378788627505",
+    "firebase_url": "https://smart-waste-management-3041a-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "smart-waste-management-3041a",
+    "storage_bucket": "smart-waste-management-3041a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378788627505:android:d18cd3c952595044e50110",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "378788627505-dd6mb9g739n649lb37jgpgguag1dge6f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBlV6xD_3wqAy0NSEfuwiMW3SzJYWOYYk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "378788627505-dd6mb9g739n649lb37jgpgguag1dge6f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
