@@ -5,13 +5,15 @@ import { fetchBinsData } from "../firebase/db";
 
 const containerStyle = {
   width: "100%",
-  height: "400px",
+  height: "300px",
 };
 
 const defaultCenter = {
   lat: 6.9271, // Default location (Colombo)
   lng: 79.8612,
 };
+
+
 
 const GoogleMapComponent = () => {
   const { isLoaded } = useJsApiLoader({
@@ -26,19 +28,19 @@ const GoogleMapComponent = () => {
     fetchBinsData(setBins);
 
     // Get user's current location
-    // if (navigator.geolocation) {
-    //   navigator.geolocation.getCurrentPosition(
-    //     (position) => {
-    //       setCurrentLocation({
-    //         lat: position.coords.latitude,
-    //         lng: position.coords.longitude,
-    //       });
-    //     },
-    //     (error) => {
-    //       console.error("Error getting location:", error);
-    //     }
-    //   );
-    // }
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setCurrentLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+        }
+      );
+    }
   }, []);
 
   if (!isLoaded) return <p>Loading Map...</p>;

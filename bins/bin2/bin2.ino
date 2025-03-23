@@ -4,8 +4,8 @@
 #include <MFRC522.h>
 
 // WiFi Credentials
-#define WIFI_SSID "Dailog 4G"
-#define WIFI_PASSWORD "123456789"
+#define WIFI_SSID "Dialog 4G 399"
+#define WIFI_PASSWORD "31b06c07"
 
 // Firebase Credentials
 #define FIREBASE_HOST "https://smart-waste-management-3041a-default-rtdb.asia-southeast1.firebasedatabase.app/"
@@ -29,7 +29,7 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 const float lat = 6.036970;  // Example latitude
 const float lng = 80.224024; // Example longitude
 const String binID = "bin2";
-const String location = "Colombo Second Street";
+const String location = "Beach Entrance";
 
 void setup() {
   Serial.begin(115200);
