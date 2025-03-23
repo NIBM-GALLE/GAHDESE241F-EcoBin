@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import Sidebar from "../../../components/Sidebar";
 import { fetchBinsData } from "../../../firebase/db";
@@ -38,16 +38,19 @@ const AdminDashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {Object.values(bins).map((bin: any, index) => (
-                <tr key={index} className="border-b">
-                  <td className="p-3">{bin.id}</td>
-                  <td className="p-3">{bin.location}</td>
-                  <td className="p-3">{bin.level}%</td>
-                  <td className={`p-3 font-semibold ${bin.level >= 75 ? "text-red-500" : bin.level >= 40 ? "text-yellow-500" : "text-green-500"}`}>
-                    {bin.status}
-                  </td>
-                </tr>
-              ))}
+              {Object.values(bins).map((bin: any, index) => {
+                const levelPercentage = bin.wasteLevel;
+                return (
+                  <tr key={index} className="border-b">
+                    <td className="p-3">{bin.id}</td>
+                    <td className="p-3">{bin.location}</td>
+                    <td className="p-3">{levelPercentage.toFixed(1)}%</td>
+                    <td className={`p-3 font-semibold ${levelPercentage >= 75 ? "text-red-500" : levelPercentage >= 40 ? "text-yellow-500" : "text-green-500"}`}>
+                      {levelPercentage >= 75 ? "Full" : levelPercentage >= 40 ? "Half-Full" : "Low"}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

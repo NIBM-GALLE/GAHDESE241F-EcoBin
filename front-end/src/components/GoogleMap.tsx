@@ -1,17 +1,19 @@
 "use client";
-import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, Marker, InfoWindow, useJsApiLoader } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import { fetchBinsData } from "../firebase/db";
 
 const containerStyle = {
   width: "100%",
-  height: "400px",
+  height: "300px",
 };
 
-const center = {
-  lat: 6.9271, // Default latitude (Colombo)
-  lng: 79.8612, // Default longitude (Colombo)
+const defaultCenter = {
+  lat: 6.9271, // Default location (Colombo)
+  lng: 79.8612,
 };
+
+
 
 const GoogleMapComponent = () => {
   const { isLoaded } = useJsApiLoader({
@@ -19,23 +21,68 @@ const GoogleMapComponent = () => {
   });
 
   const [bins, setBins] = useState<any>(null);
+  const [selectedBin, setSelectedBin] = useState<any>(null);
+  const [currentLocation, setCurrentLocation] = useState(defaultCenter);
 
   useEffect(() => {
     fetchBinsData(setBins);
+
+    // Get user's current location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setCurrentLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+        }
+      );
+    }
   }, []);
 
   if (!isLoaded) return <p>Loading Map...</p>;
 
   return (
-    <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={12}>
+    <GoogleMap mapContainerStyle={containerStyle} center={currentLocation} zoom={13}>
+      {/* Display all bin locations */}
       {bins &&
-        Object.values(bins).map((bin: any, index) => (
-          <Marker
-            key={index}
-            position={{ lat: bin.lat, lng: bin.lng }}
-            label={bin.status === "Full" ? "🔴" : "🟢"}
-          />
-        ))}
+      Object.entries(bins).map(([key, bin]: any) => (
+        <Marker
+        key={key}
+        position={{ lat: bin.lat, lng: bin.lng }}
+        label={bin.status === "Full" ? "🔴" : "🟢"}
+        onClick={() => setSelectedBin(bin)} // Open Info Window on Click
+        />
+      ))}
+
+      {/* Show Info Window when a bin is clicked */}
+      {selectedBin && (
+      <InfoWindow
+        position={{ lat: selectedBin.lat, lng: selectedBin.lng }}
+        onCloseClick={() => setSelectedBin(null)}
+      >
+        <div>
+        <h2 className="font-bold">Bin Information</h2>
+        <p>Status: {selectedBin.status}</p>
+        <p>Location: {selectedBin.lat}, {selectedBin.lng}</p>
+        </div>
+      </InfoWindow>
+      )}
+
+      {/* Show User's Current Location */}
+      <Marker
+      position={currentLocation}
+      icon={{
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 8,
+        fillColor: "deepskyblue",
+        fillOpacity: 1,
+        strokeWeight: 0,
+      }}
+      />
     </GoogleMap>
   );
 };

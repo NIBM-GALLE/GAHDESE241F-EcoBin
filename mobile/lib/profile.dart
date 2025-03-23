@@ -12,39 +12,45 @@ class ProfileOfUser extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'EcoWaste Manager',
+
+
+
       theme: ThemeData(
-        primaryColor: const Color(0xFF1B5E20), // Dark Green
+        primaryColor: const Color(0xFF2E7D32),
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF1B5E20),
-          primary: const Color(0xFF1B5E20),
-          secondary: const Color(0xFF43A047),
+          seedColor: const Color(0xFF2E7D32),
+          primary: const Color(0xFF2E7D32),
+          secondary: const Color(0xFF689F38),
           background: Colors.white,
         ),
         fontFamily: 'Roboto',
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFF1B5E20),
+          backgroundColor: Color(0xFF2E7D32),
           foregroundColor: Colors.white,
+          elevation: 0,
         ),
         inputDecorationTheme: InputDecorationTheme(
-          filled: true,
-          fillColor: Colors.grey[100],
+          labelStyle: const TextStyle(color: Color(0xFF2E7D32)),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Color(0xFFE0E0E0)),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Color(0xFFE0E0E0)),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: Color(0xFF1B5E20), width: 2),
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Color(0xFF2E7D32)),
           ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF1B5E20),
+            backgroundColor: const Color(0xFF2E7D32),
             foregroundColor: Colors.white,
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+            padding: const EdgeInsets.symmetric(vertical: 16),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(12),
             ),
           ),
         ),
@@ -63,55 +69,25 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  // Bin types
-  final List<Map<String, dynamic>> binTypes = [
-    {
-      'name': 'General Waste',
-      'icon': Icons.delete,
-      'color': const Color.fromARGB(255, 23, 23, 23),
-      'selected': true,
-    },
-    {
-      'name': 'Recyclables',
-      'icon': Icons.recycling,
-      'color': Colors.blue,
-      'selected': true,
-    },
-    {
-      'name': 'Organic Waste',
-      'icon': Icons.eco,
-      'color': Colors.green,
-      'selected': false,
-    },
-    {
-      'name': 'Glass',
-      'icon': Icons.liquor,
-      'color': Colors.amber,
-      'selected': false,
-    },
-    {
-      'name': 'Hazardous',
-      'icon': Icons.warning,
-      'color': Colors.red,
-      'selected': false,
-    },
-  ];
-
   // Form controllers
   final _formKey = GlobalKey<FormState>();
-  final _firstNameController = TextEditingController(text: 'John');
-  final _lastNameController = TextEditingController(text: 'Smith');
+  final _fullNameController = TextEditingController(text: 'John Smith');
   final _emailController = TextEditingController(
     text: 'john.smith@example.com',
+  );
+  final _phoneController = TextEditingController(text: '+1 555-123-4567');
+  final _addressController = TextEditingController(
+    text: '123 Green Street, Eco City, EC 12345',
   );
   bool _isEditing = false;
   String _profileImagePath = '';
 
   @override
   void dispose() {
-    _firstNameController.dispose();
-    _lastNameController.dispose();
+    _fullNameController.dispose();
     _emailController.dispose();
+    _phoneController.dispose();
+    _addressController.dispose();
     super.dispose();
   }
 
@@ -129,16 +105,11 @@ class _ProfilePageState extends State<ProfilePage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Profile updated successfully'),
-          backgroundColor: Color(0xFF1B5E20),
+          backgroundColor: Color(0xFF2E7D32),
+          behavior: SnackBarBehavior.floating,
         ),
       );
     }
-  }
-
-  void _updateBinSelection(int index) {
-    setState(() {
-      binTypes[index]['selected'] = !binTypes[index]['selected'];
-    });
   }
 
   @override
@@ -147,62 +118,115 @@ class _ProfilePageState extends State<ProfilePage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(_isEditing ? 'Edit Profile' : 'My Profile'),
-        elevation: 0,
+        centerTitle: true,
         actions: [
           if (!_isEditing)
-            IconButton(icon: const Icon(Icons.edit), onPressed: _toggleEditMode)
+            IconButton(
+              icon: const Icon(Icons.edit, size: 20),
+              onPressed: _toggleEditMode,
+            )
           else
             IconButton(
-              icon: const Icon(Icons.close),
+              icon: const Icon(Icons.close, size: 20),
               onPressed: _toggleEditMode,
             ),
           if (_isEditing)
-            IconButton(icon: const Icon(Icons.check), onPressed: _saveProfile),
+            IconButton(
+              icon: const Icon(Icons.check, size: 20),
+              onPressed: _saveProfile,
+            ),
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(24.0),
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              // Subtle app name at the top
+              if (!_isEditing)
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 16),
+                  child: Text(
+                    'EcoBin',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF2E7D32),
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ),
+
               // Profile Picture
-              Center(
+              Container(
+                margin: const EdgeInsets.only(top: 8, bottom: 32),
                 child: Stack(
                   children: [
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundColor: Colors.grey[200],
-                      backgroundImage:
-                          _profileImagePath.isNotEmpty
-                              ? AssetImage(_profileImagePath) as ImageProvider
-                              : null,
-                      child:
-                          _profileImagePath.isEmpty
-                              ? const Icon(
-                                Icons.person,
-                                size: 80,
-                                color: Colors.grey,
-                              )
-                              : null,
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 1,
+                            blurRadius: 6,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: CircleAvatar(
+                        radius: 60,
+                        backgroundColor: Colors.white,
+                        child: CircleAvatar(
+                          radius: 58,
+                          backgroundColor: Colors.grey[100],
+                          backgroundImage:
+                              _profileImagePath.isNotEmpty
+                                  ? AssetImage(_profileImagePath)
+                                      as ImageProvider
+                                  : null,
+                          child:
+                              _profileImagePath.isEmpty
+                                  ? const Icon(
+                                    Icons.person,
+                                    size: 48,
+                                    color: Color(0xFFAEAEAE),
+                                  )
+                                  : null,
+                        ),
+                      ),
                     ),
                     if (_isEditing)
                       Positioned(
                         right: 0,
                         bottom: 0,
-                        child: CircleAvatar(
-                          backgroundColor: Theme.of(context).primaryColor,
-                          radius: 20,
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.camera_alt,
-                              color: Colors.white,
-                              size: 20,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                spreadRadius: 1,
+                                blurRadius: 2,
+                                offset: const Offset(0, 1),
+                              ),
+                            ],
+                          ),
+                          child: CircleAvatar(
+                            backgroundColor: Theme.of(context).primaryColor,
+                            radius: 18,
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.camera_alt,
+                                color: Colors.white,
+                                size: 18,
+                              ),
+                              onPressed: () {
+                                // Implement image selection
+                              },
                             ),
-                            onPressed: () {
-                              // Implement image selection
-                            },
                           ),
                         ),
                       ),
@@ -210,114 +234,77 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
 
-              const SizedBox(height: 30),
-
-              // Personal Information Section
-              Text(
-                'Personal Information',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor,
+              // Information Header - Simplified
+              Container(
+                width: double.infinity,
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(bottom: 16, left: 4),
+                child: Text(
+                  'Personal Information',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).primaryColor,
+                    letterSpacing: 0.3,
+                  ),
                 ),
               ),
-              const SizedBox(height: 16),
 
+              // Profile Information Card
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.1),
+                      color: Colors.grey.withOpacity(0.08),
                       spreadRadius: 1,
                       blurRadius: 10,
-                      offset: const Offset(0, 1),
+                      offset: const Offset(0, 2),
                     ),
                   ],
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // First Name
-                    Text(
-                      'First Name',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[700],
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
+                    // Full Name
                     _isEditing
                         ? TextFormField(
-                          controller: _firstNameController,
+                          controller: _fullNameController,
                           decoration: const InputDecoration(
-                            hintText: 'Enter your first name',
+                            labelText: 'Full Name',
+                            prefixIcon: Icon(
+                              Icons.person_outline,
+                              color: Color(0xFF2E7D32),
+                              size: 20,
+                            ),
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your first name';
+                              return 'Please enter your full name';
                             }
                             return null;
                           },
                         )
-                        : Text(
-                          _firstNameController.text,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
+                        : _buildProfileField(
+                          Icons.person_outline,
+                          'Full Name',
+                          _fullNameController.text,
                         ),
-                    const SizedBox(height: 16),
-
-                    // Last Name
-                    Text(
-                      'Last Name',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[700],
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    _isEditing
-                        ? TextFormField(
-                          controller: _lastNameController,
-                          decoration: const InputDecoration(
-                            hintText: 'Enter your last name',
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your last name';
-                            }
-                            return null;
-                          },
-                        )
-                        : Text(
-                          _lastNameController.text,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 24),
 
                     // Email
-                    Text(
-                      'Email Address',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[700],
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
                     _isEditing
                         ? TextFormField(
                           controller: _emailController,
                           decoration: const InputDecoration(
-                            hintText: 'Enter your email address',
+                            labelText: 'Email Address',
+                            prefixIcon: Icon(
+                              Icons.email_outlined,
+                              color: Color(0xFF2E7D32),
+                              size: 20,
+                            ),
                           ),
                           keyboardType: TextInputType.emailAddress,
                           validator: (value) {
@@ -330,120 +317,87 @@ class _ProfilePageState extends State<ProfilePage> {
                             return null;
                           },
                         )
-                        : Text(
+                        : _buildProfileField(
+                          Icons.email_outlined,
+                          'Email Address',
                           _emailController.text,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
                         ),
-                  ],
-                ),
-              ),
+                    const SizedBox(height: 24),
 
-              const SizedBox(height: 30),
-
-              // Bin Selection Section
-              Text(
-                'Requested Bins',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.1),
-                      spreadRadius: 1,
-                      blurRadius: 10,
-                      offset: const Offset(0, 1),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: List.generate(binTypes.length, (index) {
-                    final bin = binTypes[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 12.0),
-                      child: InkWell(
-                        onTap:
-                            _isEditing
-                                ? () => _updateBinSelection(index)
-                                : null,
-                        borderRadius: BorderRadius.circular(8),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 12,
-                            horizontal: 16,
-                          ),
-                          decoration: BoxDecoration(
-                            color:
-                                bin['selected']
-                                    ? bin['color'].withOpacity(0.1)
-                                    : Colors.grey[100],
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color:
-                                  bin['selected']
-                                      ? bin['color']
-                                      : Colors.grey[300]!,
-                              width: 1,
+                    // Phone
+                    _isEditing
+                        ? TextFormField(
+                          controller: _phoneController,
+                          decoration: const InputDecoration(
+                            labelText: 'Phone Number',
+                            prefixIcon: Icon(
+                              Icons.phone_outlined,
+                              color: Color(0xFF2E7D32),
+                              size: 20,
                             ),
                           ),
-                          child: Row(
-                            children: [
-                              Icon(bin['icon'], color: bin['color'], size: 24),
-                              const SizedBox(width: 16),
-                              Text(
-                                bin['name'],
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color:
-                                      bin['selected']
-                                          ? bin['color']
-                                          : Colors.grey[700],
-                                ),
-                              ),
-                              const Spacer(),
-                              if (_isEditing)
-                                Checkbox(
-                                  value: bin['selected'],
-                                  onChanged: (bool? value) {
-                                    _updateBinSelection(index);
-                                  },
-                                  activeColor: bin['color'],
-                                )
-                              else if (bin['selected'])
-                                Icon(Icons.check_circle, color: bin['color']),
-                            ],
-                          ),
+                          keyboardType: TextInputType.phone,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your phone number';
+                            }
+                            return null;
+                          },
+                        )
+                        : _buildProfileField(
+                          Icons.phone_outlined,
+                          'Phone Number',
+                          _phoneController.text,
                         ),
-                      ),
-                    );
-                  }),
+                    const SizedBox(height: 24),
+
+                    // Address
+                    _isEditing
+                        ? TextFormField(
+                          controller: _addressController,
+                          decoration: const InputDecoration(
+                            labelText: 'Address',
+                            prefixIcon: Icon(
+                              Icons.location_on_outlined,
+                              color: Color(0xFF2E7D32),
+                              size: 20,
+                            ),
+                            alignLabelWithHint: true,
+                          ),
+                          keyboardType: TextInputType.streetAddress,
+                          maxLines: 2,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your address';
+                            }
+                            return null;
+                          },
+                        )
+                        : _buildProfileField(
+                          Icons.location_on_outlined,
+                          'Address',
+                          _addressController.text,
+                        ),
+                  ],
                 ),
               ),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 32),
 
               if (_isEditing)
-                Center(
+                SizedBox(
+                  width: double.infinity,
                   child: ElevatedButton(
                     onPressed: _saveProfile,
                     child: const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child: Text(
                         'Save Profile',
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 0.5,
+                        ),
                       ),
                     ),
                   ),
@@ -452,6 +406,40 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildProfileField(IconData icon, String label, String value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(icon, size: 16, color: Colors.grey[500]),
+            const SizedBox(width: 8),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[500],
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 6),
+        Padding(
+          padding: const EdgeInsets.only(left: 24.0),
+          child: Text(
+            value,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              height: 1.3,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

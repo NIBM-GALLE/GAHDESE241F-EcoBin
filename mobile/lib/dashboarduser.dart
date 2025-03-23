@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
+import 'binlocation.dart';
 import 'binreview.dart';
 import 'eventsnupdates.dart';
+import 'profile.dart';
+import 'request_bins.dart';
 import 'signin_page.dart';
 import 'signup_page.dart';
+// Import your other pages here
+// import 'find_bins_page.dart';
+// import 'view_history_page.dart';
+// import 'bin_types_page.dart';
+// import 'payment_page.dart';
+// import 'nearby_bins_page.dart';
+// import 'green_points_page.dart';
+// import 'eco_tips_page.dart';
+// import 'notifications_page.dart';
+// import 'profile_page.dart';
+// import 'eco_updates_page.dart';
+// import 'news_detail_page.dart';
 
 class EcoBinDashboard extends StatelessWidget {
   const EcoBinDashboard({Key? key}) : super(key: key);
@@ -31,7 +46,15 @@ class EcoBinDashboard extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications_outlined, color: Colors.grey),
-            onPressed: () {},
+            onPressed: () {
+              // Uncomment when you have the NotificationsPage ready
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => const NotificationsPage(),
+              //   ),
+              // );
+            },
           ),
         ],
       ),
@@ -104,7 +127,7 @@ class EcoBinDashboard extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Quick actions grid - 2x3 grid with 6 items including the new Events & Updates
+            // Quick actions grid
             GridView.count(
               crossAxisCount: 2,
               shrinkWrap: true,
@@ -116,23 +139,43 @@ class EcoBinDashboard extends StatelessWidget {
                 _buildServiceCard(
                   icon: Icons.location_on_outlined,
                   title: "Find Bins",
-                  onPressed: () {},
+                  onPressed: () {
+                    // Uncomment when you have the FindBinsPage ready
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const BinLocation(),
+                      ),
+                    );
+                  },
                 ),
                 _buildServiceCard(
                   icon: Icons.history_outlined,
                   title: "View History",
-                  onPressed: () {},
+                  onPressed: () {
+                    // Uncomment when you have the ViewHistoryPage ready
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const ViewHistoryPage(),
+                    //   ),
+                    // );
+                  },
                 ),
                 _buildServiceCard(
                   icon: Icons.category_outlined,
-                  title: "Bin Types",
-                  onPressed: () {},
+                  title: "Bin Request",
+                  onPressed: () {
+                    // Uncomment when you have the BinTypesPage ready
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const BinRequestPage(),
+                      ),
+                    );
+                  },
                 ),
-                _buildServiceCard(
-                  icon: Icons.credit_card_outlined,
-                  title: "Payment",
-                  onPressed: () {},
-                ),
+
                 _buildServiceCard(
                   icon: Icons.star_outline,
                   title: "Rate & Reviews",
@@ -175,7 +218,15 @@ class EcoBinDashboard extends StatelessWidget {
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // Uncomment when you have the AllFeaturedPage ready
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const AllFeaturedPage(),
+                    //   ),
+                    // );
+                  },
                   style: TextButton.styleFrom(
                     minimumSize: Size.zero,
                     padding: EdgeInsets.zero,
@@ -195,23 +246,50 @@ class EcoBinDashboard extends StatelessWidget {
               title: "Find Nearby Bins",
               description: "Locate recycling points near you",
               icon: Icons.location_on_outlined,
+              onPressed: () {
+                // Uncomment when you have the NearbyBinsPage ready
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => const NearbyBinsPage(),
+                //   ),
+                // );
+              },
             ),
             const SizedBox(height: 12),
             _buildFeaturedCard(
               title: "Earn Green Points",
               description: "Get rewards for recycling",
               icon: Icons.monetization_on_outlined,
+              onPressed: () {
+                // Uncomment when you have the GreenPointsPage ready
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => const GreenPointsPage(),
+                //   ),
+                // );
+              },
             ),
             const SizedBox(height: 12),
             _buildFeaturedCard(
               title: "Eco Tips & Updates",
               description: "Learn how to protect our environment",
               icon: Icons.eco_outlined,
+              onPressed: () {
+                // Uncomment when you have the EcoTipsPage ready
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => const EcoTipsPage(),
+                //   ),
+                // );
+              },
             ),
 
             const SizedBox(height: 32),
 
-            // Environmental updates section (new section)
+            // Environmental updates section
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -224,7 +302,15 @@ class EcoBinDashboard extends StatelessWidget {
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // Uncomment when you have the AllEcoUpdatesPage ready
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const AllEcoUpdatesPage(),
+                    //   ),
+                    // );
+                  },
                   style: TextButton.styleFrom(
                     minimumSize: Size.zero,
                     padding: EdgeInsets.zero,
@@ -244,12 +330,38 @@ class EcoBinDashboard extends StatelessWidget {
               description:
                   "Simple steps to minimize plastic in your daily life",
               date: "Mar 15, 2025",
+              onLearnMorePressed: () {
+                // Uncomment when you have the specific update page ready
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => const EcoUpdateDetailPage(
+                //       title: "Reduce Plastic Waste",
+                //       date: "Mar 15, 2025",
+                //       // Pass other required parameters
+                //     ),
+                //   ),
+                // );
+              },
             ),
             const SizedBox(height: 12),
             _buildEcoUpdateCard(
               title: "Community Cleanup Day",
               description: "Join us this weekend to clean local waterways",
               date: "Mar 22, 2025",
+              onLearnMorePressed: () {
+                // Uncomment when you have the specific update page ready
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => const EcoUpdateDetailPage(
+                //       title: "Community Cleanup Day",
+                //       date: "Mar 22, 2025",
+                //       // Pass other required parameters
+                //     ),
+                //   ),
+                // );
+              },
             ),
 
             const SizedBox(height: 32),
@@ -265,7 +377,20 @@ class EcoBinDashboard extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            _buildNewsCard(),
+            _buildNewsCard(
+              onLearnMorePressed: () {
+                // Uncomment when you have the NewsDetailPage ready
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => const NewsDetailPage(
+                //       title: "New Recycling Center",
+                //       // Pass other required parameters
+                //     ),
+                //   ),
+                // );
+              },
+            ),
           ],
         ),
       ),
@@ -298,6 +423,43 @@ class EcoBinDashboard extends StatelessWidget {
           ),
         ],
         currentIndex: 0,
+        onTap: (index) {
+          // Handle bottom navigation bar item clicks
+          switch (index) {
+            case 0:
+              // Already on home page
+              break;
+            case 1:
+              // Navigate to Events page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const EventsAndUpdatesPage(),
+                ),
+              );
+              break;
+            case 2:
+              // Navigate to Alerts page
+              // Uncomment when you have the AlertsPage ready
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => const AlertsPage(),
+              //   ),
+              // );
+              break;
+            case 3:
+              // Navigate to Profile page
+              // Uncomment when you have the ProfilePage ready
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProfileOfUser(children: []),
+                ),
+              );
+              break;
+          }
+        },
       ),
     );
   }
@@ -349,7 +511,8 @@ class EcoBinDashboard extends StatelessWidget {
         side: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1),
       ),
       child: InkWell(
-        onTap: () {},
+        onTap:
+            onPressed, // This was the key issue - using the passed in onPressed
         borderRadius: BorderRadius.circular(12),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -374,12 +537,13 @@ class EcoBinDashboard extends StatelessWidget {
     required String title,
     required String description,
     required IconData icon,
+    required VoidCallback onPressed,
   }) {
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
-        onTap: () {},
+        onTap: onPressed, // Using the passed in onPressed callback
         borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -426,12 +590,13 @@ class EcoBinDashboard extends StatelessWidget {
     required String title,
     required String description,
     required String date,
+    required VoidCallback onLearnMorePressed,
   }) {
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
-        onTap: () {},
+        onTap: onLearnMorePressed, // Using the whole card as clickable
         borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -483,7 +648,7 @@ class EcoBinDashboard extends StatelessWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: onLearnMorePressed,
                     style: TextButton.styleFrom(
                       minimumSize: Size.zero,
                       padding: EdgeInsets.zero,
@@ -506,7 +671,7 @@ class EcoBinDashboard extends StatelessWidget {
     );
   }
 
-  Widget _buildNewsCard() {
+  Widget _buildNewsCard({required VoidCallback onLearnMorePressed}) {
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -552,7 +717,7 @@ class EcoBinDashboard extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: onLearnMorePressed,
                     child: const Text(
                       "Learn More",
                       style: TextStyle(
