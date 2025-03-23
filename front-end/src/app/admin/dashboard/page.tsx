@@ -39,7 +39,7 @@ const AdminDashboard = () => {
             </thead>
             <tbody>
               {Object.values(bins).map((bin: any, index) => {
-                const levelPercentage = bin.wasteLevel * 10;
+                const levelPercentage = bin.wasteLevel;
                 return (
                   <tr key={index} className="border-b">
                     <td className="p-3">{bin.id}</td>
