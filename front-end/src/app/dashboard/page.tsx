@@ -19,7 +19,7 @@ const UserDashboard = () => {
   if (!bins) return <p className="text-center mt-10">Loading bins data...</p>;
 
   // Convert wasteLevel from decimal to percentage
-  const binLevels = Object.values(bins).map((bin: any) => bin.wasteLevel * 100);
+  const binLevels = Object.values(bins).map((bin: any) => bin.wasteLevel * 10);
   const binLocations = Object.values(bins).map((bin: any) => bin.location);
   const fullBins = binLevels.filter((level) => level >= 75).length;
 
