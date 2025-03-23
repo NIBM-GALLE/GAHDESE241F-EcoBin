@@ -29,7 +29,7 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 const float lat = 6.008808;  // Example latitude
 const float lng = 80.244372; // Example longitude
 const String binID = "bin1";
-const String location = "Colombo Main Street";
+const String location = "SkinnyToms";
 
 void setup() {
   Serial.begin(115200);
