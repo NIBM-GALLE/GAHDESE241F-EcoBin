@@ -13,6 +13,8 @@ class ProfileOfUser extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
 
+
+
       theme: ThemeData(
         primaryColor: const Color(0xFF2E7D32),
         colorScheme: ColorScheme.fromSeed(

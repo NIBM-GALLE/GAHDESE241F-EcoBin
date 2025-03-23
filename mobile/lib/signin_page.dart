@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'dashboarduser.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -13,6 +16,9 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController _passwordController = TextEditingController();
   bool _obscureText = true;
 
+  // Firebase Auth instance
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -20,12 +26,56 @@ class _SignInPageState extends State<SignInPage> {
     super.dispose();
   }
 
-  void _handleSignIn() {
+  Future<void> _handleSignIn() async {
     if (_formKey.currentState!.validate()) {
-      // Implement your sign-in logic here
-      print('Sign in with: ${_emailController.text}');
-      // Navigate to home screen after successful sign-in
-      // Navigator.pushReplacementNamed(context, '/home');
+      try {
+        // Sign in with Firebase
+        UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+        );
+
+        // Show success message
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Sign in successful!'),
+              backgroundColor: Color(0xFF2E7D32),
+              duration: Duration(seconds: 1),
+            ),
+          );
+          // Navigate to user dashboard page after successful login
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const EcoBinDashboard()),
+          );
+        }
+      } on FirebaseAuthException catch (e) {
+        // Handle different Firebase Auth exceptions
+        String errorMessage = 'Incorrect email or password.';
+
+        if (e.code == 'user-not-found') {
+          errorMessage = 'No user found with this email.';
+        } else if (e.code == 'wrong-password') {
+          errorMessage = 'Incorrect password.';
+        } else if (e.code == 'invalid-email') {
+          errorMessage = 'Please provide a valid email address.';
+        } else if (e.code == 'user-disabled') {
+          errorMessage = 'This account has been disabled.';
+        }
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorMessage), backgroundColor: Colors.red),
+        );
+      } catch (e) {
+        // Handle generic errors
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 
