@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'binlocation.dart';
 import 'binreview.dart';
 import 'eventsnupdates.dart';
 import 'profile.dart';
@@ -140,12 +141,12 @@ class EcoBinDashboard extends StatelessWidget {
                   title: "Find Bins",
                   onPressed: () {
                     // Uncomment when you have the FindBinsPage ready
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const FindBinsPage(),
-                    //   ),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const BinLocation(),
+                      ),
+                    );
                   },
                 ),
                 _buildServiceCard(
