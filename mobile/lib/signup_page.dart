@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'signin_page.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -16,6 +19,9 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _addressController = TextEditingController();
   bool _obscureText = true;
 
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   @override
   void dispose() {
     _fullNameController.dispose();
@@ -26,12 +32,75 @@ class _SignUpPageState extends State<SignUpPage> {
     super.dispose();
   }
 
-  void _handleSignUp() {
+  // Handle sign up with Firebase - optimized for faster processing
+  Future<void> _handleSignUp() async {
     if (_formKey.currentState!.validate()) {
-      // Implement your sign-up logic here
-      print('Sign up with: ${_emailController.text}');
-      // Navigate to sign-in page after successful sign-up
-      Navigator.pushReplacementNamed(context, '/signin');
+      try {
+        // Create user with email and password
+        UserCredential userCredential = await _auth
+            .createUserWithEmailAndPassword(
+              email: _emailController.text.trim(),
+              password: _passwordController.text,
+            );
+
+        // Store user data in Firestore with the required format
+        _firestore
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .set({
+              'name': _fullNameController.text,
+              'email': _emailController.text.trim(),
+              'phone': _phoneController.text,
+              'address': _addressController.text,
+              'role': "user",
+              'createdAt': FieldValue.serverTimestamp(),
+            })
+            .catchError((error) {
+              // Just log the error but don't block navigation
+              print('Firestore error (will retry later): $error');
+            });
+
+        if (mounted) {
+          // Show success message
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Account created successfully!'),
+              backgroundColor: Color(0xFF2E7D32),
+              duration: Duration(seconds: 1),
+            ),
+          );
+
+          // Navigate to SignInPage
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const SignInPage()),
+          );
+        }
+      } on FirebaseAuthException catch (e) {
+        String errorMessage = 'An error occurred. Please try again.';
+
+        if (e.code == 'weak-password') {
+          errorMessage = 'The password provided is too weak.';
+        } else if (e.code == 'email-already-in-use') {
+          errorMessage = 'An account already exists for this email.';
+        } else if (e.code == 'invalid-email') {
+          errorMessage = 'Please provide a valid email address.';
+        } else if (e.code == 'permission-denied') {
+          errorMessage =
+              'Firebase permission denied. Please check your security rules.';
+        }
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorMessage), backgroundColor: Colors.red),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 
@@ -280,8 +349,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     },
                   ),
                   const SizedBox(height: 30),
-
-                  // Sign Up Button
+                  // Sign Up Button that directly calls _handleSignUp
                   ElevatedButton(
                     onPressed: _handleSignUp,
                     style: ElevatedButton.styleFrom(

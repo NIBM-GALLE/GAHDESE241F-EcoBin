@@ -19,7 +19,7 @@ const UserDashboard = () => {
   if (!bins) return <p className="text-center mt-10">Loading bins data...</p>;
 
   // Convert wasteLevel from decimal to percentage
-  const binLevels = Object.values(bins).map((bin: any) => bin.wasteLevel * 10);
+  const binLevels = Object.values(bins).map((bin: any) => bin.wasteLevel);
   const binLocations = Object.values(bins).map((bin: any) => bin.location);
   const fullBins = binLevels.filter((level) => level >= 75).length;
 
@@ -52,7 +52,7 @@ const UserDashboard = () => {
         </div>
 
         {/* 📌 Charts */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4" >
           {/* Doughnut Chart: Bin Status */}
           <div className="bg-white p-6 rounded-lg shadow">
             <h2 className="text-xl font-bold mb-4">Bin Fill Levels</h2>
