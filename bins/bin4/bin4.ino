@@ -4,8 +4,10 @@
 #include <MFRC522.h>
 
 // WiFi Credentials
-#define WIFI_SSID "RedmiNote13"
-#define WIFI_PASSWORD "sawindu123"
+
+#define WIFI_SSID "Dialog 4G 399"
+#define WIFI_PASSWORD "31b06c07"
+
 
 // Firebase Credentials
 #define FIREBASE_HOST "https://smart-waste-management-3041a-default-rtdb.asia-southeast1.firebasedatabase.app/"
