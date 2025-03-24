@@ -46,7 +46,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '378788627505',
     projectId: 'smart-waste-management-3041a',
     authDomain: 'smart-waste-management-3041a.firebaseapp.com',
-    databaseURL: 'https://smart-waste-management-3041a-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://smart-waste-management-3041a-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'smart-waste-management-3041a.firebasestorage.app',
   );
 
@@ -55,7 +56,8 @@ class DefaultFirebaseOptions {
     appId: '1:378788627505:android:d18cd3c952595044e50110',
     messagingSenderId: '378788627505',
     projectId: 'smart-waste-management-3041a',
-    databaseURL: 'https://smart-waste-management-3041a-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://smart-waste-management-3041a-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'smart-waste-management-3041a.firebasestorage.app',
   );
 
@@ -64,7 +66,8 @@ class DefaultFirebaseOptions {
     appId: '1:378788627505:ios:d3401ff39eefd738e50110',
     messagingSenderId: '378788627505',
     projectId: 'smart-waste-management-3041a',
-    databaseURL: 'https://smart-waste-management-3041a-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://smart-waste-management-3041a-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'smart-waste-management-3041a.firebasestorage.app',
     iosBundleId: 'com.example.flutterApplication1',
   );
@@ -74,7 +77,8 @@ class DefaultFirebaseOptions {
     appId: '1:378788627505:ios:d3401ff39eefd738e50110',
     messagingSenderId: '378788627505',
     projectId: 'smart-waste-management-3041a',
-    databaseURL: 'https://smart-waste-management-3041a-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://smart-waste-management-3041a-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'smart-waste-management-3041a.firebasestorage.app',
     iosBundleId: 'com.example.flutterApplication1',
   );
@@ -85,8 +89,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '378788627505',
     projectId: 'smart-waste-management-3041a',
     authDomain: 'smart-waste-management-3041a.firebaseapp.com',
-    databaseURL: 'https://smart-waste-management-3041a-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://smart-waste-management-3041a-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'smart-waste-management-3041a.firebasestorage.app',
   );
-
 }
